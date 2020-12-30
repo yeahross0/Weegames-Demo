@@ -1,0 +1,801 @@
+{
+  "format_version": "0.2",
+  "published": true,
+  "game_type": "Minigame",
+  "objects": [
+    {
+      "name": "Left Wall",
+      "sprite": {
+        "Colour": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 256.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 512.0,
+        "height": 900.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": true,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "On",
+      "instructions": [
+        {
+          "triggers": [],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Player"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Right Wall",
+      "sprite": {
+        "Colour": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 1344.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 512.0,
+        "height": 900.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Player"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Player",
+      "sprite": {
+        "Image": {
+          "name": "adventurer-wall-slide-00"
+        }
+      },
+      "position": {
+        "x": 531.0,
+        "y": 500.0
+      },
+      "size": {
+        "width": 200.0,
+        "height": 148.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": {
+        "min": {
+          "x": 65.0,
+          "y": 10.0
+        },
+        "max": {
+          "x": 130.0,
+          "y": 135.0
+        }
+      },
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "On",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Down"
+                      ]
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Left Wall"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Down"
+                      ]
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            },
+            {
+              "SetProperty": {
+                "FlipHorizontal": {
+                  "SetFlip": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": "Anywhere",
+                  "interaction": {
+                    "Button": {
+                      "state": "Down"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Left Wall",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "UpRight"
+                      ]
+                    }
+                  },
+                  "speed": "Fast"
+                }
+              }
+            },
+            {
+              "Motion": {
+                "Accelerate": {
+                  "Continuous": {
+                    "direction": {
+                      "Direction": {
+                        "possible_directions": [
+                          "Down"
+                        ]
+                      }
+                    },
+                    "speed": "Fast"
+                  }
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Right Wall"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Down"
+                      ]
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            },
+            {
+              "SetProperty": {
+                "FlipHorizontal": {
+                  "SetFlip": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": "Anywhere",
+                  "interaction": {
+                    "Button": {
+                      "state": "Down"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Right Wall",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "UpLeft"
+                      ]
+                    }
+                  },
+                  "speed": "Fast"
+                }
+              }
+            },
+            {
+              "Motion": {
+                "Accelerate": {
+                  "Continuous": {
+                    "direction": {
+                      "Direction": {
+                        "possible_directions": [
+                          "Down"
+                        ]
+                      }
+                    },
+                    "speed": "Fast"
+                  }
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Obstacle"
+                }
+              }
+            },
+            {
+              "WinStatus": "NotYetLost"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Down"
+                      ]
+                    }
+                  },
+                  "speed": "Normal"
+                }
+              }
+            },
+            "Lose",
+            {
+              "PlaySound": {
+                "name": "damage"
+              }
+            },
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "adventurer-fall-00"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "adventurer-fall-01"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "SwitchedOff"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "adventurer-wall-slide-00"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "adventurer-wall-slide-01"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "adventurer-crnr-jmp-00"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "adventurer-crnr-jmp-01"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "End"
+            }
+          ],
+          "actions": [
+            "Win"
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 0.0,
+                    "y": 974.0
+                  },
+                  "max": {
+                    "x": 1600.0,
+                    "y": 1200.0
+                  }
+                }
+              }
+            },
+            {
+              "WinStatus": "NotYetLost"
+            }
+          ],
+          "actions": [
+            "Lose",
+            {
+              "Effect": "Freeze"
+            },
+            {
+              "PlaySound": {
+                "name": "gasp"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Obstacle",
+      "sprite": {
+        "Image": {
+          "name": "Flight-1"
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 600.0,
+        "height": 600.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": {
+        "min": {
+          "x": 290.0,
+          "y": 270.0
+        },
+        "max": {
+          "x": 350.0,
+          "y": 340.0
+        }
+      },
+      "flip": {
+        "horizontal": true,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Area": {
+                    "min": {
+                      "x": 700.0,
+                      "y": -1200.0
+                    },
+                    "max": {
+                      "x": 900.0,
+                      "y": -200.0
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Down"
+                      ]
+                    }
+                  },
+                  "speed": "Slow"
+                }
+              }
+            },
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "Flight-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "Flight-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "Flight-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "Flight-4"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "Flight-5"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "Flight-6"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "Flight-7"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "Flight-8"
+                    }
+                  }
+                ],
+                "speed": "Fast"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Left Wall",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "FlipHorizontal": {
+                  "SetFlip": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Right Wall",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "FlipHorizontal": {
+                  "SetFlip": false
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "background": [
+    {
+      "sprite": {
+        "Colour": {
+          "r": 0.5568628,
+          "g": 0.4745098,
+          "b": 0.7490196,
+          "a": 1.0
+        }
+      },
+      "area": {
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 1600.0,
+          "y": 900.0
+        }
+      }
+    },
+    {
+      "sprite": {
+        "Image": {
+          "name": "final2"
+        }
+      },
+      "area": {
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 1600.0,
+          "y": 960.0
+        }
+      }
+    }
+  ],
+  "asset_files": {
+    "images": {
+      "Flight-3": "Flight-3.png",
+      "adventurer-fall-01": "adventurer-fall-01.png",
+      "Flight-6": "Flight-6.png",
+      "adventurer-wall-slide-01": "adventurer-wall-slide-01.png",
+      "Flight-2": "Flight-2.png",
+      "adventurer-crnr-jmp-01": "adventurer-crnr-jmp-01.png",
+      "Flight-5": "Flight-5.png",
+      "Flight-8": "Flight-8.png",
+      "final2": "final2.png",
+      "Flight-4": "Flight-4.png",
+      "Flight-7": "Flight-7.png",
+      "adventurer-crnr-jmp-00": "adventurer-crnr-jmp-00.png",
+      "wall": "wall.png",
+      "Flight-1": "Flight-1.png",
+      "adventurer-fall-00": "adventurer-fall-00.png",
+      "adventurer-wall-slide-00": "adventurer-wall-slide-00.png"
+    },
+    "audio": {
+      "damage": "damage.ogg",
+      "gasp": "gasp.ogg"
+    },
+    "music": {
+      "filename": "mystery-unsolved.ogg",
+      "looped": false
+    },
+    "fonts": {}
+  },
+  "length": {
+    "Seconds": 4.2
+  },
+  "intro_text": "Stay up!",
+  "attribution": "adventurer: https://rvros.itch.io/animated-pixel-hero\nmonster: https://luizmelo.itch.io/monsters-creatures-fantasy\ndungeon: https://bakudas.itch.io/generic-dungeon-pack\n\nSound effects by BCKR licenced under CC BY 4.0\nhttps://creativecommons.org/licenses/by/4.0/legalcode\nhttps://bckr.itch.io/sdap\n\nmusic: https://timbeek.itch.io/dystopian"
+}

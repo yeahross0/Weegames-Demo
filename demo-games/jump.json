@@ -1,0 +1,944 @@
+{
+  "format_version": "0.2",
+  "published": true,
+  "game_type": "Minigame",
+  "objects": [
+    {
+      "name": "Ground",
+      "sprite": {
+        "Colour": {
+          "r": 0.09411765,
+          "g": 0.36862746,
+          "b": 0.019607844,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 860.0
+      },
+      "size": {
+        "width": 1600.0,
+        "height": 400.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": []
+    },
+    {
+      "name": "Player",
+      "sprite": {
+        "Image": {
+          "name": "player-run-1"
+        }
+      },
+      "position": {
+        "x": 600.0,
+        "y": 565.0
+      },
+      "size": {
+        "width": 198.0,
+        "height": 192.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": {
+        "min": {
+          "x": 36.0,
+          "y": 60.0
+        },
+        "max": {
+          "x": 144.0,
+          "y": 192.0
+        }
+      },
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "On",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Ground"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": "Stop"
+            },
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "ClampPosition": {
+                    "area": {
+                      "min": {
+                        "x": 0.0,
+                        "y": 200.0
+                      },
+                      "max": {
+                        "x": 1600.0,
+                        "y": 565.0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": "Anywhere",
+                  "interaction": {
+                    "Button": {
+                      "state": "Press"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": {
+                    "Bounce": {
+                      "initial_direction": null
+                    }
+                  },
+                  "area": {
+                    "min": {
+                      "x": 600.0,
+                      "y": 350.0
+                    },
+                    "max": {
+                      "x": 600.0,
+                      "y": 610.0
+                    }
+                  },
+                  "speed": "VeryFast"
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "SwitchedOff"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "player-run-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "player-run-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "player-run-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "player-run-4"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "player-run-5"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "player-run-6"
+                    }
+                  }
+                ],
+                "speed": "Fast"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "PlayOnce",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "player-jump-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "player-jump-2"
+                    }
+                  }
+                ],
+                "speed": "VerySlow"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Enemy 1",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": {
+                    "Bounce": {
+                      "initial_direction": null
+                    }
+                  },
+                  "area": {
+                    "min": {
+                      "x": 600.0,
+                      "y": 200.0
+                    },
+                    "max": {
+                      "x": 600.0,
+                      "y": 610.0
+                    }
+                  },
+                  "speed": "VeryFast"
+                }
+              }
+            },
+            {
+              "PlaySound": {
+                "name": "pop"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Enemy 2",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": {
+                    "Bounce": {
+                      "initial_direction": null
+                    }
+                  },
+                  "area": {
+                    "min": {
+                      "x": 600.0,
+                      "y": 200.0
+                    },
+                    "max": {
+                      "x": 600.0,
+                      "y": 610.0
+                    }
+                  },
+                  "speed": "VeryFast"
+                }
+              }
+            },
+            {
+              "PlaySound": {
+                "name": "pop"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "WinStatus": "HasBeenLost"
+            }
+          ],
+          "actions": [
+            {
+              "Effect": "Freeze"
+            },
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "player-hurt-1"
+                  }
+                }
+              }
+            },
+            {
+              "PlaySound": {
+                "name": "hit"
+              }
+            },
+            "StopMusic"
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "End"
+            }
+          ],
+          "actions": [
+            "Win"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Enemy 1",
+      "sprite": {
+        "Image": {
+          "name": "frog-idle-1"
+        }
+      },
+      "position": {
+        "x": 1600.0,
+        "y": 595.0
+      },
+      "size": {
+        "width": 210.0,
+        "height": 192.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": {
+        "min": {
+          "x": 24.0,
+          "y": 48.0
+        },
+        "max": {
+          "x": 180.0,
+          "y": 160.0
+        }
+      },
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Left"
+                      ]
+                    }
+                  },
+                  "speed": {
+                    "Value": 10.0
+                  }
+                }
+              }
+            },
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "frog-idle-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "frog-idle-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "frog-idle-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "frog-idle-4"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Player"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Colour": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0,
+                    "a": 0.0
+                  }
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            },
+            {
+              "Animate": {
+                "animation_type": "PlayOnce",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "enemy-death-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-4"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-5"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-6"
+                    }
+                  },
+                  {
+                    "Colour": {
+                      "r": 0.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.0
+                    }
+                  }
+                ],
+                "speed": "VeryFast"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Player"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            "Lose"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Map",
+      "sprite": {
+        "Image": {
+          "name": "test-map"
+        }
+      },
+      "position": {
+        "x": 1300.0,
+        "y": 900.0
+      },
+      "size": {
+        "width": 5576.0,
+        "height": 2400.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 2,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Left"
+                      ]
+                    }
+                  },
+                  "speed": {
+                    "Value": 10.0
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sky",
+      "sprite": {
+        "Image": {
+          "name": "back"
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 900.0
+      },
+      "size": {
+        "width": 3072.0,
+        "height": 1920.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 3,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Left"
+                      ]
+                    }
+                  },
+                  "speed": {
+                    "Value": 0.5
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Enemy 2",
+      "sprite": {
+        "Image": {
+          "name": "frog-idle-1"
+        }
+      },
+      "position": {
+        "x": 2700.0,
+        "y": 595.0
+      },
+      "size": {
+        "width": 210.0,
+        "height": 192.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": {
+        "min": {
+          "x": 24.0,
+          "y": 48.0
+        },
+        "max": {
+          "x": 180.0,
+          "y": 160.0
+        }
+      },
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Left"
+                      ]
+                    }
+                  },
+                  "speed": {
+                    "Value": 10.0
+                  }
+                }
+              }
+            },
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "frog-idle-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "frog-idle-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "frog-idle-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "frog-idle-4"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Player"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Colour": {
+                    "r": 0.0,
+                    "g": 0.0,
+                    "b": 0.0,
+                    "a": 0.0
+                  }
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            },
+            {
+              "Animate": {
+                "animation_type": "PlayOnce",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "enemy-death-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-4"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-5"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "enemy-death-6"
+                    }
+                  },
+                  {
+                    "Colour": {
+                      "r": 0.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.0
+                    }
+                  }
+                ],
+                "speed": "VeryFast"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Player"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            "Lose"
+          ]
+        }
+      ]
+    }
+  ],
+  "background": [
+    {
+      "sprite": {
+        "Colour": {
+          "r": 0.23452245,
+          "g": 0.79922783,
+          "b": 0.7928105,
+          "a": 1.0
+        }
+      },
+      "area": {
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 1600.0,
+          "y": 900.0
+        }
+      }
+    }
+  ],
+  "asset_files": {
+    "images": {
+      "frog-idle-2": "frog-idle-2.png",
+      "player-hurt-1": "player-hurt-1.png",
+      "enemy-death-6": "enemy-death-6.png",
+      "enemy-death-1": "enemy-death-1.png",
+      "enemy-death-4": "enemy-death-4.png",
+      "enemy-death-5": "enemy-death-5.png",
+      "frog-idle-4": "frog-idle-4.png",
+      "player-jump-2": "player-jump-2.png",
+      "back": "back.png",
+      "player-run-2": "player-run-2.png",
+      "player-run-3": "player-run-3.png",
+      "frog-idle-3": "frog-idle-3.png",
+      "player-run-6": "player-run-6.png",
+      "player-run-1": "player-run-1.png",
+      "player-run-4": "player-run-4.png",
+      "player-run-5": "player-run-5.png",
+      "enemy-death-3": "enemy-death-3.png",
+      "player-jump-1": "player-jump-1.png",
+      "frog-idle-1": "frog-idle-1.png",
+      "enemy-death-2": "enemy-death-2.png",
+      "test-map": "test-map.png"
+    },
+    "audio": {
+      "hit": "hit.ogg",
+      "pop": "pop.ogg"
+    },
+    "music": {
+      "filename": "sun-shine.ogg",
+      "looped": false
+    },
+    "fonts": {}
+  },
+  "length": {
+    "Seconds": 4.0
+  },
+  "intro_text": "Bounce!",
+  "attribution": "https://ansimuz.itch.io/sunny-land-pixel-game-art\n\nhttps://jdwasabi.itch.io/8-bit-16-bit-sound-effects-pack\n\nSun Shine Loop by Tim Beek is licenced under CC-BY-4.0\nhttps://creativecommons.org/licenses/by/4.0/legalcode\nhttps://timbeek.itch.io/royalty-free-music-pack"
+}
