@@ -18,4 +18,4 @@ serde_json = "1.0.53"
 indexmap = "1.3.2"
 rand = "0.7.3"
 futures = "0.3.8"
-quad-snd = { path = "C:/Ross/projects/quad-snd" }
+quad-snd = { git = "https://github.com/yeahross0/quad-snd/", rev = "30a4925"}
