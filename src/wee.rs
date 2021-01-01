@@ -289,16 +289,16 @@ impl SerialiseObjectList for Vec<SerialiseObject> {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
-struct SerialiseMusic {
-    filename: String,
-    looped: bool,
+pub struct SerialiseMusic {
+    pub filename: String,
+    pub looped: bool,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct AssetFiles {
     pub images: HashMap<String, String>,
-    audio: HashMap<String, String>,
-    music: Option<SerialiseMusic>,
+    pub audio: HashMap<String, String>,
+    pub music: Option<SerialiseMusic>,
     pub fonts: HashMap<String, FontLoadInfo>,
 }
 
@@ -1188,6 +1188,7 @@ pub struct Game {
     pub intro_text: String,
     pub drawn_text: HashMap<String, DrawnText>,
     pub difficulty: u32,
+    pub has_music_finished: bool,
     pub end_early: bool,
 }
 
@@ -1214,11 +1215,13 @@ impl Game {
             intro_text: game_data.intro_text.as_deref().unwrap_or("").to_string(),
             drawn_text: HashMap::new(),
             difficulty: 1,
+            has_music_finished: false,
             end_early: false,
         }
     }
 
-    pub fn update(&mut self, mouse: &Mouse) {
+    pub fn update(&mut self, mouse: &Mouse) -> Vec<String> {
+        let mut played_sounds = Vec::new();
         let keys: Vec<String> = self.objects.keys().cloned().collect();
         for name in keys.iter() {
             match self.effect {
@@ -1229,7 +1232,8 @@ impl Game {
 
                     let actions = self.check_triggers(name, &mouse).unwrap();
 
-                    self.apply_actions(name, &actions, &mouse).unwrap();
+                    let mut new_sounds = self.apply_actions(name, &actions, &mouse).unwrap();
+                    played_sounds.append(&mut new_sounds);
 
                     self.objects[name].update_animation();
 
@@ -1250,6 +1254,8 @@ impl Game {
                 }
             }
         }
+
+        played_sounds
     }
 
     fn is_triggered(&self, name: &str, trigger: &Trigger, mouse: &Mouse) -> WeeResult<bool> {
@@ -1364,13 +1370,13 @@ impl Game {
         &mut self,
         name: &str,
         actions: &[Action],
-        //played_sounds: &mut Vec<String>,
         mouse: &Mouse,
-    ) -> WeeResult<()> {
+    ) -> WeeResult<Vec<String>> {
+        let mut played_sounds = Vec::new();
         for action in actions {
-            self.apply_action(name, action, mouse)?;
+            self.apply_action(name, action, mouse, &mut played_sounds)?;
         }
-        Ok(())
+        Ok(played_sounds)
     }
 
     fn apply_action(
@@ -1378,7 +1384,7 @@ impl Game {
         name: &str,
         action: &Action,
         mouse: &Mouse,
-        //played_sounds: &mut Vec<String>,
+        played_sounds: &mut Vec<String>,
     ) -> WeeResult<()> {
         let try_to_set_status = |status: &mut GameStatus, opposite, next_frame| {
             *status = match status.current {
@@ -1414,12 +1420,12 @@ impl Game {
             Action::Effect(new_effect) => {
                 self.effect = *new_effect;
             }
-            Action::PlaySound { name: _sound_name } => {
-                // TODO:
-                //played_sounds.push(sound_name.clone());
+            Action::PlaySound { name: sound_name } => {
+                played_sounds.push(sound_name.clone());
             }
             Action::StopMusic => {
                 // TODO:
+                self.has_music_finished = true;
                 //self.assets.music.stop();
             }
             Action::Animate {
@@ -1619,7 +1625,7 @@ impl Game {
             Action::Random { random_actions } => {
                 let action = random_actions.choose();
                 if let Some(action) = action {
-                    return self.apply_action(name, &action, mouse);
+                    return self.apply_action(name, &action, mouse, played_sounds);
                 }
             }
             Action::EndEarly => {

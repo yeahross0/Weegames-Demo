@@ -2181,8 +2181,8 @@
       "yellow-1": "yellow-1.png"
     },
     "audio": {
-      "bullet": "bullet.wav",
-      "laser-bullet-1": "laser-bullet-1.wav",
+      "bullet": "bullet.ogg",
+      "laser-bullet-1": "laser-bullet-1.ogg",
       "woosh": "woosh.ogg",
       "rising": "rising.ogg",
       "laser-bullet-2": "laser-bullet-2.ogg"

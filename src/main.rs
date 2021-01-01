@@ -1,5 +1,6 @@
 use macroquad::prelude::*;
 use macroquad::texture;
+use quad_snd::mixer::Sound;
 
 use futures::future::join_all;
 use std::{collections::HashMap, default::Default, path::Path, str};
@@ -20,6 +21,15 @@ const UP_TO_DIFFICULTY_TWO: i32 = 20;
 const UP_TO_DIFFICULTY_THREE: i32 = 40;
 const BOSS_GAME_INTERVAL: i32 = 15;
 const INCREASE_SPEED_AFTER_GAMES: i32 = 5;
+
+enum GameMode {
+    Prelude,
+    Interlude,
+    Play,
+    Boss,
+    GameOver,
+    PlayAgain,
+}
 
 async fn load_images(image_files: &HashMap<String, String>) -> Images {
     macroquad::logging::debug!("Start loading images");
@@ -52,6 +62,54 @@ async fn load_images(image_files: &HashMap<String, String>) -> Images {
     images
 }
 
+async fn load_sounds(sound_files: &HashMap<String, String>) -> Sounds {
+    let base_path = Path::new("demo-games/audio");
+    let mut sounds = Sounds::new();
+
+    for (key, filename) in sound_files {
+        let path = base_path.join(&filename);
+
+        let data = macroquad::file::load_file(&path.to_str().unwrap())
+            .await
+            .unwrap();
+
+        let sound = quad_snd::decoder::read_ogg(&data).unwrap();
+
+        sounds.insert(key.to_string(), sound);
+    }
+    sounds
+}
+
+#[derive(Clone)]
+struct Music {
+    data: Sound,
+    looped: bool,
+}
+
+async fn load_music(music_file: &Option<SerialiseMusic>) -> Option<Music> {
+    let base_path = Path::new("demo-games/audio");
+
+    if let Some(music_info) = music_file {
+        let path = base_path.join(&music_info.filename);
+
+        let data = macroquad::file::load_file(&path.to_str().unwrap())
+            .await
+            .unwrap();
+
+        let mut sound = quad_snd::decoder::read_ogg(&data).unwrap();
+        if music_info.looped {
+            sound.playback_style = quad_snd::mixer::PlaybackStyle::Looped;
+        }
+
+        Some(Music {
+            data: sound,
+            looped: music_info.looped,
+        })
+    } else {
+        None
+    }
+}
+
 async fn load_fonts(font_files: &HashMap<String, FontLoadInfo>) -> Fonts {
     let base_path = Path::new("demo-games/fonts");
     let mut fonts = Fonts::new();
@@ -67,23 +125,26 @@ async fn load_fonts(font_files: &HashMap<String, FontLoadInfo>) -> Fonts {
 
 type Images = HashMap<String, Texture2D>;
 type Fonts = HashMap<String, (Font, u16)>;
+type Sounds = HashMap<String, Sound>;
 
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 struct LoadedGameData {
     data: GameData,
     images: Images,
+    music: Option<Music>,
+    sounds: Sounds,
     fonts: Fonts,
 }
 
 impl LoadedGameData {
     async fn load(filename: &str) -> LoadedGameData {
         let game_data = GameData::load(filename).await.unwrap();
-        let images = load_images(&game_data.asset_files.images).await;
-        let fonts = load_fonts(&game_data.asset_files.fonts).await;
         LoadedGameData {
+            images: load_images(&game_data.asset_files.images).await,
+            music: load_music(&game_data.asset_files.music).await,
+            sounds: load_sounds(&game_data.asset_files.audio).await,
+            fonts: load_fonts(&game_data.asset_files.fonts).await,
             data: game_data,
-            images,
-            fonts,
         }
     }
 }
@@ -115,6 +176,14 @@ impl Progress {
             last_game: None,
             boss_playback_rate: INITIAL_PLAYBACK_RATE,
             next_boss_game: BOSS_GAME_INTERVAL,
+        }
+    }
+
+    fn get_playback_rate(&self, game_mode: &GameMode) -> f32 {
+        match game_mode {
+            GameMode::Play => self.playback_rate,
+            GameMode::Boss => self.boss_playback_rate,
+            _ => 1.0,
         }
     }
 
@@ -426,6 +495,12 @@ fn draw_game(game: &Game, images: &Images, fonts: &Fonts, intro_font: &Font) {
 
 #[macroquad::main("Weegames Demo")]
 async fn main() {
+    /*for entry in std::fs::read_dir("demo-games/audio").unwrap() {
+        let entry = entry.unwrap();
+        let path = entry.path();
+        println!("{:?}", path);
+    }*/
+
     macroquad::logging::debug!("Start game");
 
     macroquad::rand::srand(macroquad::miniquad::date::now() as _);
@@ -480,11 +555,17 @@ async fn main() {
 
     let mut images = loaded_data[filename].images.clone();
 
-    macroquad::logging::debug!("Images loaded");
+    macroquad::logging::debug!("Images added");
 
     let mut fonts = loaded_data[filename].fonts.clone();
 
-    macroquad::logging::debug!("Fonts loaded");
+    macroquad::logging::debug!("Fonts added");
+
+    let mut sounds = loaded_data[filename].sounds.clone();
+    let mut music = loaded_data[filename].music.clone();
+    // music.start();
+
+    macroquad::logging::debug!("Audio added");
 
     let camera = macroquad::camera::Camera2D::from_display_rect(macroquad::math::Rect::new(
         0.0,
@@ -493,15 +574,6 @@ async fn main() {
         PROJECTION_HEIGHT,
     ));
     macroquad::camera::set_camera(camera);
-
-    enum GameMode {
-        Prelude,
-        Interlude,
-        Play,
-        Boss,
-        GameOver,
-        PlayAgain,
-    };
 
     let mut game_mode = GameMode::Prelude;
 
@@ -531,8 +603,22 @@ async fn main() {
 
     let intro_font = macroquad::text::load_ttf_font("fonts/Roboto-Medium.ttf").await;
 
+    let mut mixer = quad_snd::mixer::SoundMixer::new();
+
+    let mut music_id = None;
+    let mut sound_ids = Vec::new();
+
     loop {
+        mixer.frame();
+
         if FrameCount::Frames(0) == game.frames.remaining() || game.end_early {
+            if let Some(sound_id) = music_id.take() {
+                mixer.stop(sound_id);
+            }
+            for sound_id in &sound_ids {
+                mixer.stop(*sound_id);
+            }
+            sound_ids = Vec::new();
             match game_mode {
                 GameMode::Prelude => {
                     //filename = game_filenames.choose().unwrap();
@@ -706,6 +792,15 @@ async fn main() {
 
             images = loaded_data[filename].images.clone();
             fonts = loaded_data[filename].fonts.clone();
+            sounds = loaded_data[filename].sounds.clone();
+            music = loaded_data[filename].music.clone();
+            if let Some(music) = &music {
+                music_id = Some(mixer.play_ext(
+                    music.data.clone(),
+                    quad_snd::mixer::Volume(1.0),
+                    quad_snd::mixer::Speed(progress.get_playback_rate(&game_mode)),
+                ));
+            }
         }
 
         clear_background(WHITE);
@@ -727,10 +822,12 @@ async fn main() {
 
         game.frames.steps_taken += 1;
 
-        let frames_to_run = match game_mode {
-            GameMode::Play | GameMode::Boss => frames_to_run(game.frames, progress.playback_rate),
+        let frames_to_run = frames_to_run(game.frames, progress.get_playback_rate(&game_mode));
+
+        /*let frames_to_run = match game_mode {
+            GameMode::Play | GameMode::Boss => frames_to_run(game.frames, progress.get_playback_rate()),
             _ => 1,
-        };
+        };*/
 
         for _ in 0..frames_to_run {
             use macroquad::input::MouseButton;
@@ -753,7 +850,22 @@ async fn main() {
                 },
             };
 
-            game.update(&mouse);
+            let played_sounds = game.update(&mouse);
+
+            for played_sound in played_sounds {
+                let sound_id = mixer.play_ext(
+                    sounds[&played_sound].clone(),
+                    quad_snd::mixer::Volume(1.0),
+                    quad_snd::mixer::Speed(progress.get_playback_rate(&game_mode)),
+                );
+                sound_ids.push(sound_id);
+            }
+
+            if game.has_music_finished {
+                if let Some(sound_id) = music_id {
+                    mixer.stop(sound_id);
+                }
+            }
 
             game.status.current = game.status.next_frame;
             game.status.next_frame = match game.status.next_frame {
