@@ -1,3 +1,5 @@
+Wasp logo adapted from ['2 wasp 2007-04-25.jpg'](https://commons.wikimedia.org/wiki/File:2_wasp_2007-04-25.jpg) by Trounce and is licenced under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
+
 # Bike game
 
 bike: https://overcrafted.itch.io/free-paid-vehicle-car-sprites-
