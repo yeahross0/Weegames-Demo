@@ -21,6 +21,7 @@ const UP_TO_DIFFICULTY_TWO: i32 = 20;
 const UP_TO_DIFFICULTY_THREE: i32 = 40;
 const BOSS_GAME_INTERVAL: i32 = 15;
 const INCREASE_SPEED_AFTER_GAMES: i32 = 5;
+const VOLUME: f32 = 0.5;
 
 enum GameMode {
     Prelude,
@@ -33,6 +34,7 @@ enum GameMode {
 
 async fn load_images(image_files: &HashMap<String, String>) -> Images {
     macroquad::logging::debug!("Start loading images");
+    //macroquad::text::draw_text("Loading", 10.0, 10.0, 32.0, GRAY);
     let mut images = Images::new();
     let mut paths = Vec::new();
     let mut loading_images = Vec::new();
@@ -43,10 +45,14 @@ async fn load_images(image_files: &HashMap<String, String>) -> Images {
         let path = base_path.join(path);
 
         paths.push(path.to_str().unwrap().to_string());
+
+        //macroquad::text::draw_text("Loading", 10.0, 10.0, 32.0, GRAY);
     }
 
     for path in &paths {
         loading_images.push(texture::load_texture(path));
+
+        //macroquad::text::draw_text("Loading", 10.0, 10.0, 32.0, GRAY);
     }
 
     let textures: Vec<_> = join_all(loading_images).await;
@@ -57,6 +63,7 @@ async fn load_images(image_files: &HashMap<String, String>) -> Images {
             texture.set_filter(context, macroquad::texture::FilterMode::Nearest);
         }
         images.insert(key.to_string(), texture);
+        //macroquad::text::draw_text("Loading", 10.0, 10.0, 32.0, GRAY);
     }
 
     images
@@ -76,6 +83,8 @@ async fn load_sounds(sound_files: &HashMap<String, String>) -> Sounds {
         let sound = quad_snd::decoder::read_ogg(&data).unwrap();
 
         sounds.insert(key.to_string(), sound);
+
+        //macroquad::text::draw_text("Loading", 10.0, 10.0, 32.0, GRAY);
     }
     sounds
 }
@@ -87,6 +96,8 @@ struct Music {
 }
 
 async fn load_music(music_file: &Option<SerialiseMusic>) -> Option<Music> {
+    //macroquad::text::draw_text("Loading", 10.0, 10.0, 32.0, GRAY);
+
     let base_path = Path::new("demo-games/audio");
 
     if let Some(music_info) = music_file {
@@ -111,6 +122,7 @@ async fn load_music(music_file: &Option<SerialiseMusic>) -> Option<Music> {
 }
 
 async fn load_fonts(font_files: &HashMap<String, FontLoadInfo>) -> Fonts {
+    //macroquad::text::draw_text("Loading", 10.0, 10.0, 32.0, GRAY);
     let base_path = Path::new("demo-games/fonts");
     let mut fonts = Fonts::new();
 
@@ -138,14 +150,22 @@ struct LoadedGameData {
 
 impl LoadedGameData {
     async fn load(filename: &str) -> LoadedGameData {
+        //macroquad::text::draw_text("Loading", 10.0, 10.0, 32.0, GRAY);
+        //next_frame().await;
         let game_data = GameData::load(filename).await.unwrap();
-        LoadedGameData {
+        macroquad::text::draw_text("...", 10.0, 10.0, 32.0, GRAY);
+        let data = LoadedGameData {
             images: load_images(&game_data.asset_files.images).await,
             music: load_music(&game_data.asset_files.music).await,
             sounds: load_sounds(&game_data.asset_files.audio).await,
             fonts: load_fonts(&game_data.asset_files.fonts).await,
             data: game_data,
-        }
+        };
+        macroquad::text::draw_text("...", 10.0, 10.0, 32.0, GRAY);
+        //next_frame().await;
+        //macroquad::text::draw_text(&format!("Loaded {}", filename), 10.0, 10.0, 32.0, YELLOW);
+        //next_frame().await;
+        data
     }
 }
 
@@ -532,6 +552,11 @@ async fn main() {
         "demo-games/play-again.json",
     ]);
 
+    for _ in 0..30 {
+        macroquad::text::draw_text("Loading games", 10.0, 10.0, 32.0, WHITE);
+        next_frame().await;
+    }
+
     let mut loaded_data = HashMap::new();
     let mut waiting_data = Vec::new();
     for filename in &games_to_load {
@@ -797,7 +822,7 @@ async fn main() {
             if let Some(music) = &music {
                 music_id = Some(mixer.play_ext(
                     music.data.clone(),
-                    quad_snd::mixer::Volume(1.0),
+                    quad_snd::mixer::Volume(VOLUME),
                     quad_snd::mixer::Speed(progress.get_playback_rate(&game_mode)),
                 ));
             }
@@ -855,7 +880,7 @@ async fn main() {
             for played_sound in played_sounds {
                 let sound_id = mixer.play_ext(
                     sounds[&played_sound].clone(),
-                    quad_snd::mixer::Volume(1.0),
+                    quad_snd::mixer::Volume(VOLUME),
                     quad_snd::mixer::Speed(progress.get_playback_rate(&game_mode)),
                 );
                 sound_ids.push(sound_id);
