@@ -842,6 +842,59 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Completed",
+      "sprite": {
+        "Colour": {
+          "r": 0.0,
+          "g": 0.24705882,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 75.0,
+        "y": 850.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "DrawText": {
+                "text": "{GamesCount} games played",
+                "font": "Fonty",
+                "colour": {
+                  "r": 0.59607846,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 1.0
+                },
+                "resize": "MatchText",
+                "justify": "Left"
+              }
+            }
+          ]
+        }
+      ]
     }
   ],
   "background": [],
@@ -877,9 +930,9 @@
     "audio": {},
     "music": null,
     "fonts": {
-      "LiberationMono-Regular": {
-        "filename": "LiberationMono-Regular.ttf",
-        "size": 128.0
+      "Fonty": {
+        "filename": "Lato-Bold.ttf",
+        "size": 48.0
       }
     }
   },

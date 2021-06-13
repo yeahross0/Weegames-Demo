@@ -7,7 +7,12 @@ use macroquad::{
 };
 
 use futures::future::join_all;
-use std::{collections::HashMap, default::Default, path::Path, str};
+use std::{
+    collections::{HashMap, HashSet},
+    default::Default,
+    path::Path,
+    str,
+};
 
 mod wee;
 
@@ -539,10 +544,6 @@ impl GamesList {
         let mut bosses = Vec::new();
         for (filename, game) in all_games {
             // TODO: Wiser way of doing this
-            println!("filename: {}", filename);
-            println!("~~~~~~~~");
-            println!("{}", game.attribution);
-            println!("~~~~~~~~\n");
             if Path::new(&filename).starts_with(&directory) && game.published {
                 //if filename.starts_with(&directory) && game.published {
                 if game.game_type == GameType::Minigame {
@@ -646,6 +647,7 @@ struct MainGame<S> {
     games: HashMap<&'static str, GameData>,
     preloaded_assets: HashMap<&'static str, Assets>,
     high_scores: HashMap<String, (i32, i32, i32)>,
+    played_games: HashSet<&'static str>,
 }
 
 struct LoadingScreen {}
@@ -811,6 +813,7 @@ impl MainGame<LoadingScreen> {
             games,
             preloaded_assets,
             high_scores: HashMap::new(),
+            played_games: HashSet::new(),
         })
     }
 }
@@ -835,10 +838,18 @@ impl MainGame<Menu> {
         log::debug!("pick_games");
         let filename = "games/system/choose-mode.json";
 
-        let game = self.games[filename].clone();
+        let mut game_data = self.games[filename].clone();
         let assets = &self.preloaded_assets[filename];
 
-        let mut game = Game::from_data(game);
+        {
+            let text_replacements =
+                vec![("{GamesCount}", format!("{}/41", self.played_games.len()))];
+            for object in game_data.objects.iter_mut() {
+                object.replace_text(&text_replacements);
+            }
+        }
+
+        let mut game = Game::from_data(game_data);
 
         assets.music.play(DEFAULT_PLAYBACK_RATE, VOLUME);
 
@@ -874,6 +885,7 @@ impl MainGame<Menu> {
             games: self.games,
             preloaded_assets: self.preloaded_assets,
             high_scores: self.high_scores,
+            played_games: self.played_games,
         })
     }
 }
@@ -918,6 +930,7 @@ impl MainGame<Prelude> {
             games: self.games,
             preloaded_assets: self.preloaded_assets,
             high_scores: self.high_scores,
+            played_games: self.played_games,
         })
     }
 }
@@ -1010,6 +1023,7 @@ impl MainGame<Interlude> {
                 games: self.games,
                 preloaded_assets: self.preloaded_assets,
                 high_scores: self.high_scores,
+                played_games: self.played_games,
             });
             Ok(next_step)
         } else {
@@ -1020,6 +1034,8 @@ impl MainGame<Interlude> {
             };
 
             log::debug!("next filename: {}", next_filename);
+
+            self.played_games.insert(next_filename);
 
             let new_game_data = self.games[next_filename].clone();
 
@@ -1108,6 +1124,7 @@ impl MainGame<Interlude> {
                 games: self.games,
                 preloaded_assets: self.preloaded_assets,
                 high_scores: self.high_scores,
+                played_games: self.played_games,
             });
             Ok(next_step)
         }
@@ -1177,6 +1194,7 @@ impl MainGame<Play> {
             games: self.games,
             preloaded_assets: self.preloaded_assets,
             high_scores: self.high_scores,
+            played_games: self.played_games,
         })
     }
 }
@@ -1260,6 +1278,7 @@ impl MainGame<GameOver> {
             games: self.games,
             preloaded_assets: self.preloaded_assets,
             high_scores: self.high_scores,
+            played_games: self.played_games,
         })
     }
 }
