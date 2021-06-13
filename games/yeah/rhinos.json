@@ -1,0 +1,511 @@
+{
+  "format_version": "0.2",
+  "published": true,
+  "game_type": "Minigame",
+  "objects": [
+    {
+      "name": "person",
+      "sprite": {
+        "Image": {
+          "name": "man-and-ball-man-with-woman-features-smaller"
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 225.0,
+        "height": 400.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": "Mouse"
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "ClampPosition": {
+                    "area": {
+                      "min": {
+                        "x": 20.0,
+                        "y": 535.0
+                      },
+                      "max": {
+                        "x": 1552.0,
+                        "y": 871.0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "End"
+            }
+          ],
+          "actions": [
+            "Win"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ball",
+      "sprite": {
+        "Image": {
+          "name": "man-and-ball-ball-with-woman-features"
+        }
+      },
+      "position": {
+        "x": 254.0,
+        "y": 68.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Area": {
+                    "min": {
+                      "x": 414.0,
+                      "y": 10.0
+                    },
+                    "max": {
+                      "x": 1190.0,
+                      "y": 149.0
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": {
+                    "Bounce": {
+                      "initial_direction": null
+                    }
+                  },
+                  "area": {
+                    "min": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "max": {
+                      "x": 1600.0,
+                      "y": 900.0
+                    }
+                  },
+                  "speed": "Normal"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "person"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": {
+                    "Bounce": {
+                      "initial_direction": null
+                    }
+                  },
+                  "area": {
+                    "min": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "max": {
+                      "x": 1600.0,
+                      "y": 900.0
+                    }
+                  },
+                  "speed": "Normal"
+                }
+              }
+            },
+            {
+              "PlaySound": {
+                "name": "kick"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 1520.0,
+                    "y": 438.0
+                  },
+                  "max": {
+                    "x": 1541.0,
+                    "y": 450.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "man-and-ball-ball-with-woman-features-burst"
+                  }
+                }
+              }
+            },
+            {
+              "Effect": "Freeze"
+            },
+            "Lose",
+            {
+              "PlaySound": {
+                "name": "pop"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 65.0,
+                    "y": 465.0
+                  },
+                  "max": {
+                    "x": 100.0,
+                    "y": 500.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "man-and-ball-ball-with-woman-features-burst"
+                  }
+                }
+              }
+            },
+            {
+              "Effect": "Freeze"
+            },
+            "Lose",
+            {
+              "PlaySound": {
+                "name": "pop"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ball2",
+      "sprite": {
+        "Image": {
+          "name": "man-and-ball-ball-with-woman-features"
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Area": {
+                    "min": {
+                      "x": 414.0,
+                      "y": 10.0
+                    },
+                    "max": {
+                      "x": 1190.0,
+                      "y": 149.0
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": {
+                    "Bounce": {
+                      "initial_direction": null
+                    }
+                  },
+                  "area": {
+                    "min": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "max": {
+                      "x": 1600.0,
+                      "y": 900.0
+                    }
+                  },
+                  "speed": "Normal"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "DifficultyLevel": {
+                "level": 1
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Point": {
+                    "x": 9999.0,
+                    "y": 9999.0
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "person"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": {
+                    "Bounce": {
+                      "initial_direction": null
+                    }
+                  },
+                  "area": {
+                    "min": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "max": {
+                      "x": 1600.0,
+                      "y": 900.0
+                    }
+                  },
+                  "speed": "Normal"
+                }
+              }
+            },
+            {
+              "PlaySound": {
+                "name": "kick"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 1520.0,
+                    "y": 438.0
+                  },
+                  "max": {
+                    "x": 1541.0,
+                    "y": 450.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "man-and-ball-ball-with-woman-features-burst"
+                  }
+                }
+              }
+            },
+            {
+              "Effect": "Freeze"
+            },
+            "Lose",
+            {
+              "PlaySound": {
+                "name": "pop"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 65.0,
+                    "y": 465.0
+                  },
+                  "max": {
+                    "x": 100.0,
+                    "y": 500.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "man-and-ball-ball-with-woman-features-burst"
+                  }
+                }
+              }
+            },
+            {
+              "Effect": "Freeze"
+            },
+            "Lose",
+            {
+              "PlaySound": {
+                "name": "pop"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "background": [
+    {
+      "sprite": {
+        "Image": {
+          "name": "rhinos16x9"
+        }
+      },
+      "area": {
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 1600.0,
+          "y": 900.0
+        }
+      }
+    }
+  ],
+  "asset_files": {
+    "images": {
+      "man-and-ball-man-with-woman-features-smaller": "man-and-ball-man-with-woman-features-smaller.png",
+      "man-and-ball-ball-with-woman-features-burst": "man-and-ball-ball-with-woman-features-burst.png",
+      "rhinos16x9": "rhinos16x9.jpg",
+      "man-and-ball-ball-with-woman-features": "man-and-ball-ball-with-woman-features.png"
+    },
+    "audio": {
+      "kick": "kick.ogg",
+      "pop": "pop.ogg"
+    },
+    "music": null,
+    "fonts": {}
+  },
+  "length": {
+    "Seconds": 4.0
+  },
+  "intro_text": "Bounce",
+  "attribution": "man and ball: https://pixabay.com/illustrations/sport-football-movement-ball-1019776/\nrhinos: https://pixabay.com/photos/africa-white-rhinos-rhino-86621/\nwoman: \nhttps://pixabay.com/illustrations/woman-haematoma-fight-black-eye-2226178/\n\nkick: https://freesound.org/people/DWSD/sounds/171104/\npop: https://freesound.org/people/unfa/sounds/245646/"
+}

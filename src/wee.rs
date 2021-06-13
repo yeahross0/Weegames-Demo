@@ -9,12 +9,13 @@ use std::{
     default::Default,
     error::Error,
     ops::Not,
+    path::Path,
     str,
 };
 
 pub const FPS: f32 = 60.0;
 
-type WeeResult<T> = Result<T, Box<dyn Error + Send + Sync>>;
+pub type WeeResult<T> = Result<T, Box<dyn Error + Send + Sync>>;
 
 #[derive(Copy, Clone, Serialize, Deserialize, Debug, PartialEq)]
 pub struct Vec2 {
@@ -314,14 +315,14 @@ impl Default for AssetFiles {
 }
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
-enum GameType {
+pub enum GameType {
     Minigame,
     BossGame,
     Other,
 }
 
 #[derive(Debug, Copy, Clone, Serialize, Deserialize, PartialEq)]
-enum Length {
+pub enum Length {
     Seconds(f32),
     Infinite,
 }
@@ -335,14 +336,14 @@ pub enum FrameCount {
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct GameData {
     format_version: String,
-    published: bool,
-    game_type: GameType,
+    pub published: bool,
+    pub game_type: GameType,
     pub objects: Vec<SerialiseObject>,
     background: Vec<BackgroundPart>,
     pub asset_files: AssetFiles,
     length: Length,
     pub intro_text: Option<String>,
-    attribution: String,
+    pub attribution: String,
 }
 
 impl Default for GameData {
@@ -822,16 +823,6 @@ enum Action {
     EndEarly,
 }
 
-impl Action {
-    pub fn is_end_early(&self) -> bool {
-        if let Action::EndEarly = self {
-            true
-        } else {
-            false
-        }
-    }
-}
-
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 struct Instruction {
     triggers: Vec<Trigger>,
@@ -977,7 +968,7 @@ pub struct Object {
     queued_motion: Vec<Motion>,
     active_motion: ActiveMotion,
     pub switch: SwitchState,
-    timer: Option<u32>,
+    pub timer: Option<u32>,
     animation: AnimationStatus,
 }
 
@@ -1104,8 +1095,9 @@ pub struct GameStatus {
 }
 
 impl GameData {
-    pub async fn load(filename: &str) -> WeeResult<GameData> {
-        let json_string = macroquad::file::load_string(filename).await?;
+    pub async fn load(filename: impl AsRef<Path>) -> WeeResult<GameData> {
+        let json_string =
+            macroquad::file::load_string(&filename.as_ref().to_string_lossy()).await?;
 
         json_from_str(&json_string)
     }
@@ -1155,7 +1147,13 @@ pub struct FrameInfo {
 impl FrameInfo {
     pub fn remaining(self) -> FrameCount {
         match self.total {
-            FrameCount::Frames(frames) => FrameCount::Frames((frames - self.ran).max(0)),
+            FrameCount::Frames(frames) => {
+                if frames < self.ran {
+                    FrameCount::Frames(0)
+                } else {
+                    FrameCount::Frames((frames - self.ran).max(0))
+                }
+            }
             FrameCount::Infinite => FrameCount::Infinite,
         }
     }
@@ -1220,34 +1218,36 @@ impl Game {
         }
     }
 
-    pub fn update(&mut self, mouse: &Mouse) -> Vec<String> {
+    pub fn update(&mut self, mouse: &Mouse) -> WeeResult<Vec<String>> {
         let mut played_sounds = Vec::new();
         let keys: Vec<String> = self.objects.keys().cloned().collect();
-        for name in keys.iter() {
-            match self.effect {
-                Effect::None => {
+        match self.effect {
+            Effect::None => {
+                for name in keys.iter() {
                     let old_switch = self.objects[name].switch;
 
                     self.objects[name].update_timer();
 
-                    let actions = self.check_triggers(name, &mouse).unwrap();
+                    let actions = self.check_triggers(name, &mouse)?;
 
-                    let mut new_sounds = self.apply_actions(name, &actions, &mouse).unwrap();
+                    let mut new_sounds = self.apply_actions(name, &actions, &mouse)?;
                     played_sounds.append(&mut new_sounds);
 
                     self.objects[name].update_animation();
 
-                    self.move_object(name, &mouse).unwrap();
+                    self.move_object(name, &mouse)?;
 
                     self.objects[name].update_switch(old_switch);
                 }
-                Effect::Freeze => {
+            }
+            Effect::Freeze => {
+                for name in keys.iter() {
                     self.objects[name].update_timer();
 
-                    let actions = self.check_triggers(name, &mouse).unwrap();
+                    let actions = self.check_triggers(name, &mouse)?;
 
                     for action in actions {
-                        if action.is_end_early() {
+                        if action == Action::EndEarly {
                             self.end_early = true;
                         }
                     }
@@ -1255,7 +1255,7 @@ impl Game {
             }
         }
 
-        played_sounds
+        Ok(played_sounds)
     }
 
     fn is_triggered(&self, name: &str, trigger: &Trigger, mouse: &Mouse) -> WeeResult<bool> {
@@ -1922,7 +1922,7 @@ impl Game {
                                     }
                                 }
                                 (closest_manifold, position)
-                            };
+                            }
                             let (original_manifold, other_position) = calculate_closest_manifold(
                                 &self.objects,
                                 name,

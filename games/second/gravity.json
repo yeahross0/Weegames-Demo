@@ -1,0 +1,916 @@
+{
+  "format_version": "0.2",
+  "published": true,
+  "game_type": "Minigame",
+  "objects": [
+    {
+      "name": "Player",
+      "sprite": {
+        "Image": {
+          "name": "warp-idle-1"
+        }
+      },
+      "position": {
+        "x": 200.0,
+        "y": 200.0
+      },
+      "size": {
+        "width": 142.0,
+        "height": 134.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": {
+        "min": {
+          "x": 50.0,
+          "y": 40.0
+        },
+        "max": {
+          "x": 100.0,
+          "y": 134.0
+        }
+      },
+      "flip": {
+        "horizontal": false,
+        "vertical": true
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Start"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": "Stop"
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": "Anywhere",
+                  "interaction": {
+                    "Button": {
+                      "state": "Release"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Start",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Down"
+                      ]
+                    }
+                  },
+                  "speed": "Slow"
+                }
+              }
+            },
+            {
+              "Motion": {
+                "Accelerate": {
+                  "Continuous": {
+                    "direction": {
+                      "Direction": {
+                        "possible_directions": [
+                          "Down"
+                        ]
+                      }
+                    },
+                    "speed": "Normal"
+                  }
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "FlipVertical": "Flip"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Platform"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": "Stop"
+            },
+            {
+              "Motion": {
+                "Target": {
+                  "target": {
+                    "Object": {
+                      "name": "Platform"
+                    }
+                  },
+                  "target_type": "Follow",
+                  "offset": {
+                    "x": 0.0,
+                    "y": -100.0
+                  },
+                  "speed": "Normal"
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": "Anywhere",
+                  "interaction": {
+                    "Button": {
+                      "state": "Release"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Platform",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Up"
+                      ]
+                    }
+                  },
+                  "speed": "Slow"
+                }
+              }
+            },
+            {
+              "Motion": {
+                "Accelerate": {
+                  "Continuous": {
+                    "direction": {
+                      "Direction": {
+                        "possible_directions": [
+                          "Up"
+                        ]
+                      }
+                    },
+                    "speed": "Normal"
+                  }
+                }
+              }
+            },
+            {
+              "SetProperty": {
+                "FlipVertical": "Flip"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "End"
+                }
+              }
+            }
+          ],
+          "actions": [
+            "Win",
+            {
+              "Motion": "Stop"
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Has Flipped",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "PlayOnce",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "warp-lean-back"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "warp-jump"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "warp-jump-land"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "warp-idle-1"
+                    }
+                  }
+                ],
+                "speed": "VeryFast"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Should Animate",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "warp-idle-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "warp-idle-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "warp-idle-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "warp-idle-4"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "WinStatus": "HasBeenWon"
+            }
+          ],
+          "actions": [
+            {
+              "PlaySound": {
+                "name": "woo"
+              }
+            },
+            {
+              "SetProperty": {
+                "Timer": {
+                  "time": 120
+                }
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "ClampPosition": {
+                    "area": {
+                      "min": {
+                        "x": 0.0,
+                        "y": 275.0
+                      },
+                      "max": {
+                        "x": 1600.0,
+                        "y": 900.0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 0.0,
+                    "y": 800.0
+                  },
+                  "max": {
+                    "x": 1600.0,
+                    "y": 900.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            "Lose"
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "WinStatus": "HasBeenLost"
+            }
+          ],
+          "actions": [
+            {
+              "PlaySound": {
+                "name": "gasp"
+              }
+            },
+            "StopMusic",
+            {
+              "SetProperty": {
+                "Timer": {
+                  "time": 60
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 0.0,
+                    "y": -100.0
+                  },
+                  "max": {
+                    "x": 1600.0,
+                    "y": 0.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            "Lose"
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": "Timer"
+              }
+            }
+          ],
+          "actions": [
+            "EndEarly"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Start",
+      "sprite": {
+        "Image": {
+          "name": "warp-platform-design"
+        }
+      },
+      "position": {
+        "x": 0.0,
+        "y": 100.0
+      },
+      "size": {
+        "width": 696.0,
+        "height": 560.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": {
+        "min": {
+          "x": 0.0,
+          "y": 240.0
+        },
+        "max": {
+          "x": 696.0,
+          "y": 560.0
+        }
+      },
+      "flip": {
+        "horizontal": false,
+        "vertical": true
+      },
+      "layer": 0,
+      "switch": "On",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": "Anywhere",
+                  "interaction": {
+                    "Button": {
+                      "state": "Release"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Player"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "End",
+      "sprite": {
+        "Image": {
+          "name": "warp-platform-smaller"
+        }
+      },
+      "position": {
+        "x": 1200.0,
+        "y": 160.0
+      },
+      "size": {
+        "width": 376.0,
+        "height": 352.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": {
+        "min": {
+          "x": 0.0,
+          "y": 128.0
+        },
+        "max": {
+          "x": 376.0,
+          "y": 352.0
+        }
+      },
+      "flip": {
+        "horizontal": false,
+        "vertical": true
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": []
+    },
+    {
+      "name": "Platform",
+      "sprite": {
+        "Image": {
+          "name": "warp-platform"
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 600.0
+      },
+      "size": {
+        "width": 184.0,
+        "height": 64.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Area": {
+                    "min": {
+                      "x": 100.0,
+                      "y": 550.0
+                    },
+                    "max": {
+                      "x": 1500.0,
+                      "y": 650.0
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": {
+                    "Reflect": {
+                      "initial_direction": {
+                        "Direction": {
+                          "possible_directions": [
+                            "Right",
+                            "Left"
+                          ]
+                        }
+                      },
+                      "movement_handling": "Anywhere"
+                    }
+                  },
+                  "area": {
+                    "min": {
+                      "x": 100.0,
+                      "y": 0.0
+                    },
+                    "max": {
+                      "x": 1500.0,
+                      "y": 900.0
+                    }
+                  },
+                  "speed": "Normal"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": "Anywhere",
+                  "interaction": {
+                    "Button": {
+                      "state": "Release"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Object": {
+                  "name": "Player"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "WinStatus": "HasBeenLost"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": "Stop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Has Flipped",
+      "sprite": {
+        "Colour": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Start",
+                "check": {
+                  "Switch": "SwitchedOff"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Platform",
+                "check": {
+                  "Switch": "SwitchedOff"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Should Animate",
+      "sprite": {
+        "Colour": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Start",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Platform",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "WinStatus": "HasBeenWon"
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "background": [
+    {
+      "sprite": {
+        "Image": {
+          "name": "warp-sky-2"
+        }
+      },
+      "area": {
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 1600.0,
+          "y": 900.0
+        }
+      }
+    }
+  ],
+  "asset_files": {
+    "images": {
+      "warp-idle-4": "warp-idle-4.png",
+      "warp-platform": "warp-platform.png",
+      "warp-idle-2": "warp-idle-2.png",
+      "warp-jump": "warp-jump.png",
+      "warp-ground": "warp-ground.png",
+      "warp-idle-1": "warp-idle-1.png",
+      "warp-jump-land": "warp-jump-land.png",
+      "warp-lean-back": "warp-lean-back.png",
+      "warp-idle-3": "warp-idle-3.png",
+      "warp-sky-2": "warp-sky-2.png",
+      "warp-platform-smaller": "warp-platform-smaller.png",
+      "warp-platform-design": "warp-platform-design.png"
+    },
+    "audio": {
+      "woo": "woo.ogg",
+      "gasp": "gasp.ogg"
+    },
+    "music": {
+      "filename": "race-to-mars-crop.ogg",
+      "looped": false
+    },
+    "fonts": {}
+  },
+  "length": {
+    "Seconds": 8.0
+  },
+  "intro_text": "Reverse Gravity!",
+  "attribution": "warp graphics: https://ansimuz.itch.io/warped-city\n\n------------------\nSound effects by BCKR licensed under CC BY 4.0\nhttps://creativecommons.org/licenses/by/4.0/legalcode\nhttps://bckr.itch.io/sdap\n------------------\n\n------------------\nRace To Mars music by DOS88 licensed under under CC BY 4.0\nhttps://creativecommons.org/licenses/by/4.0/legalcode\nhttps://dos88.itch.io/dos-88-music-library\n------------------"
+}

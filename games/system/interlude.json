@@ -1,0 +1,1179 @@
+{
+  "format_version": "0.2",
+  "published": false,
+  "game_type": "Other",
+  "objects": [
+    {
+      "name": "Score",
+      "sprite": {
+        "Colour": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 300.0
+      },
+      "size": {
+        "width": 1.0,
+        "height": 1.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "DrawText": {
+                "text": "Score: {Score}",
+                "font": "libmono",
+                "colour": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "resize": "MatchText",
+                "justify": "Centre"
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Object": {
+                    "name": "wasp-blue"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Won",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Object": {
+                    "name": "wasp-blue"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": {
+                "Exact": {
+                  "time": 60
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Boss",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "DrawText": {
+                "text": "",
+                "font": "libmono",
+                "colour": {
+                  "r": 0.0,
+                  "g": 0.0,
+                  "b": 0.0,
+                  "a": 1.0
+                },
+                "resize": "MatchObject",
+                "justify": "Centre"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "wasp-blue",
+      "sprite": {
+        "Image": {
+          "name": "wasp-blue"
+        }
+      },
+      "position": {
+        "x": 664.0,
+        "y": 382.0
+      },
+      "size": {
+        "width": 762.125,
+        "height": 877.625
+      },
+      "angle": -90.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 2,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "Won",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": "Wiggle",
+                  "area": {
+                    "min": {
+                      "x": 197.0,
+                      "y": 28.0
+                    },
+                    "max": {
+                      "x": 1077.0,
+                      "y": 780.0
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "1",
+      "sprite": {
+        "Image": {
+          "name": "wasp-green"
+        }
+      },
+      "position": {
+        "x": 1402.0,
+        "y": 113.0
+      },
+      "size": {
+        "width": 174.2,
+        "height": 200.6
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": "Wiggle",
+                  "area": {
+                    "min": {
+                      "x": 1316.0,
+                      "y": 8.0
+                    },
+                    "max": {
+                      "x": 1485.0,
+                      "y": 205.0
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "1",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "wasp-green-hit"
+                  }
+                }
+              }
+            },
+            {
+              "Motion": "Stop"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2",
+      "sprite": {
+        "Image": {
+          "name": "wasp-green"
+        }
+      },
+      "position": {
+        "x": 1411.0,
+        "y": 335.0
+      },
+      "size": {
+        "width": 174.2,
+        "height": 200.6
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": "Wiggle",
+                  "area": {
+                    "min": {
+                      "x": 1344.0,
+                      "y": 241.0
+                    },
+                    "max": {
+                      "x": 1494.0,
+                      "y": 433.0
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "2",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "wasp-green-hit"
+                  }
+                }
+              }
+            },
+            {
+              "Motion": "Stop"
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "2",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "3",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Gained Life",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "PlayOnce",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "wasp-grey-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-grey-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-grey-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-grey-4"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-green"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3",
+      "sprite": {
+        "Image": {
+          "name": "wasp-green"
+        }
+      },
+      "position": {
+        "x": 1421.0,
+        "y": 559.0
+      },
+      "size": {
+        "width": 174.2,
+        "height": 200.6
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": "Wiggle",
+                  "area": {
+                    "min": {
+                      "x": 1352.0,
+                      "y": 453.0
+                    },
+                    "max": {
+                      "x": 1502.0,
+                      "y": 651.0
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "3",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "wasp-green-hit"
+                  }
+                }
+              }
+            },
+            {
+              "Motion": "Stop"
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "3",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "4",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Gained Life",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "PlayOnce",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "wasp-grey-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-grey-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-grey-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-grey-4"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-green"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4",
+      "sprite": {
+        "Image": {
+          "name": "wasp-green"
+        }
+      },
+      "position": {
+        "x": 1427.0,
+        "y": 782.0
+      },
+      "size": {
+        "width": 174.2,
+        "height": 200.6
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "Roam": {
+                  "movement_type": "Wiggle",
+                  "area": {
+                    "min": {
+                      "x": 1353.0,
+                      "y": 683.0
+                    },
+                    "max": {
+                      "x": 1512.0,
+                      "y": 875.0
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "4",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "wasp-green-hit"
+                  }
+                }
+              }
+            },
+            {
+              "Motion": "Stop"
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "4",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Gained Life",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "PlayOnce",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "wasp-grey-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-grey-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-grey-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-grey-4"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "wasp-green"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Won",
+      "sprite": {
+        "Colour": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 0.0,
+        "height": 0.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 1,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "PlaySound": {
+                "name": "swat-crop"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "Won",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "PlaySound": {
+                "name": "squash-crop"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Swat",
+      "sprite": {
+        "Image": {
+          "name": "fly-swat"
+        }
+      },
+      "position": {
+        "x": 2000.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 320.0,
+        "height": 640.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Won",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "4",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            },
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Object": {
+                    "name": "4"
+                  }
+                }
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Relative": {
+                    "to": "CurrentPosition",
+                    "distance": {
+                      "x": 0.0,
+                      "y": 220.0
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "Won",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "3",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Object": {
+                    "name": "3"
+                  }
+                }
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Relative": {
+                    "to": "CurrentPosition",
+                    "distance": {
+                      "x": 0.0,
+                      "y": 220.0
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "Won",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "2",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Object": {
+                    "name": "2"
+                  }
+                }
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Relative": {
+                    "to": "CurrentPosition",
+                    "distance": {
+                      "x": 0.0,
+                      "y": 220.0
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            },
+            {
+              "CheckProperty": {
+                "name": "Won",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "1",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Object": {
+                    "name": "1"
+                  }
+                }
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Relative": {
+                    "to": "CurrentPosition",
+                    "distance": {
+                      "x": 0.0,
+                      "y": 220.0
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Boss",
+      "sprite": {
+        "Colour": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 300.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": {
+                "Exact": {
+                  "time": 59
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Boss",
+                "check": {
+                  "Switch": "Off"
+                }
+              }
+            }
+          ],
+          "actions": [
+            "EndEarly"
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Boss",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": {
+                  "Object": {
+                    "name": "wasp-blue"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": {
+                "Exact": {
+                  "time": 60
+                }
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Boss",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "DrawText": {
+                "text": "Boss Fight!",
+                "font": "libmono",
+                "colour": {
+                  "r": 1.0,
+                  "g": 1.0,
+                  "b": 1.0,
+                  "a": 1.0
+                },
+                "resize": "MatchText",
+                "justify": "Centre"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gained Life",
+      "sprite": {
+        "Colour": {
+          "r": 0.0,
+          "g": 0.0,
+          "b": 0.0,
+          "a": 0.0
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 100.0,
+        "height": 100.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": []
+    }
+  ],
+  "background": [
+    {
+      "sprite": {
+        "Image": {
+          "name": "bloody-hands"
+        }
+      },
+      "area": {
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 1600.0,
+          "y": 900.0
+        }
+      }
+    }
+  ],
+  "asset_files": {
+    "images": {
+      "wasp-green-hit": "wasp-green-hit.png",
+      "wasp-blue": "wasp-blue.png",
+      "wasp-grey-4": "wasp-grey-4.png",
+      "wasp-grey-2": "wasp-grey-2.png",
+      "wasp-green": "wasp-green.png",
+      "wasp-grey-1": "wasp-grey-1.png",
+      "bloody-hands": "bloody-hands.jpg",
+      "wasp-grey-3": "wasp-grey-3.png",
+      "fly-swat": "fly-swat.png"
+    },
+    "audio": {
+      "squash-crop": "squash-crop.ogg",
+      "swat-crop": "swat-crop.ogg"
+    },
+    "music": null,
+    "fonts": {
+      "libmono": {
+        "filename": "LiberationMono-Regular.ttf",
+        "size": 128.0
+      }
+    }
+  },
+  "length": {
+    "Seconds": 2.5
+  },
+  "intro_text": null,
+  "attribution": "----\nwasp:\nhttps://commons.wikimedia.org/w/index.php?curid=1999886\n'File:2 wasp 2007-04-25.jpg' by Trounce is licensed under CC BY 3.0\nhttps://creativecommons.org/licenses/by/3.0/legalcode\nI changed the colour of the image.\n----\nbloody-hands: https://www.pexels.com/photo/person-s-hands-covered-with-blood-673862/\n\nswat: https://freesound.org/people/poorenglishjuggler/sounds/131461/\n----\nsquash:\nhttps://freesound.org/people/zimbot/sounds/244486/\n'CrushAndGrind' by zimbot is licensed under CC BY 3.0\nhttps://creativecommons.org/licenses/by/3.0/legalcode\nI cropped the audio.\n----\n"
+}

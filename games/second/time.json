@@ -1,0 +1,761 @@
+{
+  "format_version": "0.2",
+  "published": true,
+  "game_type": "Minigame",
+  "objects": [
+    {
+      "name": "Ground",
+      "sprite": {
+        "Image": {
+          "name": "ground"
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 808.0
+      },
+      "size": {
+        "width": 1600.0,
+        "height": 186.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": []
+    },
+    {
+      "name": "Player",
+      "sprite": {
+        "Image": {
+          "name": "skeleton-6"
+        }
+      },
+      "position": {
+        "x": 480.0,
+        "y": 620.0
+      },
+      "size": {
+        "width": 192.0,
+        "height": 192.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Enemy",
+                "check": {
+                  "Switch": "SwitchedOn"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "PlayOnce",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "skeleton-6"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-5"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-4"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-1"
+                    }
+                  }
+                ],
+                "speed": "VeryFast"
+              }
+            },
+            {
+              "PlaySound": {
+                "name": "hello"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Enemy",
+                "check": {
+                  "Switch": "SwitchedOff"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "PlayOnce",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "skeleton-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-3"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-4"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-5"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-6"
+                    }
+                  }
+                ],
+                "speed": "VeryFast"
+              }
+            },
+            {
+              "PlaySound": {
+                "name": "bye"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Player",
+                "check": "FinishedAnimation"
+              }
+            },
+            {
+              "CheckProperty": {
+                "name": "Enemy",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "skeleton-idle-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "skeleton-idle-2"
+                    }
+                  }
+                ],
+                "speed": "Normal"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Time": "End"
+            },
+            {
+              "CheckProperty": {
+                "name": "Enemy",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            "Win"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Enemy",
+      "sprite": {
+        "Image": {
+          "name": "red-skeleton-attack-1"
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 608.0
+      },
+      "size": {
+        "width": 240.0,
+        "height": 216.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Right"
+                      ]
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            },
+            {
+              "Animate": {
+                "animation_type": "Loop",
+                "sprites": [
+                  {
+                    "Image": {
+                      "name": "red-skeleton-attack-1"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "red-skeleton-attack-2"
+                    }
+                  },
+                  {
+                    "Image": {
+                      "name": "red-skeleton-attack-3"
+                    }
+                  }
+                ],
+                "speed": "Fast"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Clock",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": "Mouse"
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "ClampPosition": {
+                    "area": {
+                      "min": {
+                        "x": 0.0,
+                        "y": 608.0
+                      },
+                      "max": {
+                        "x": 2200.0,
+                        "y": 608.0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": "Anywhere",
+                  "interaction": {
+                    "Button": {
+                      "state": "Release"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Right"
+                      ]
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "max": {
+                    "x": 220.0,
+                    "y": 900.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Clock",
+      "sprite": {
+        "Image": {
+          "name": "0750"
+        }
+      },
+      "position": {
+        "x": 800.0,
+        "y": 200.0
+      },
+      "size": {
+        "width": 554.0,
+        "height": 232.0
+      },
+      "angle": 0.0,
+      "origin": null,
+      "collision_area": null,
+      "flip": {
+        "horizontal": false,
+        "vertical": false
+      },
+      "layer": 0,
+      "switch": "Off",
+      "instructions": [
+        {
+          "triggers": [
+            {
+              "Time": "Start"
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Right"
+                      ]
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": {
+                    "Object": {
+                      "name": "Clock"
+                    }
+                  },
+                  "interaction": {
+                    "Button": {
+                      "state": "Press"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "On"
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "CheckProperty": {
+                "name": "Clock",
+                "check": {
+                  "Switch": "On"
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "Motion": {
+                "JumpTo": "Mouse"
+              }
+            },
+            {
+              "Motion": {
+                "JumpTo": {
+                  "ClampPosition": {
+                    "area": {
+                      "min": {
+                        "x": 0.0,
+                        "y": 200.0
+                      },
+                      "max": {
+                        "x": 1600.0,
+                        "y": 200.0
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Input": {
+                "Mouse": {
+                  "over": "Anywhere",
+                  "interaction": {
+                    "Button": {
+                      "state": "Release"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Switch": "Off"
+              }
+            },
+            {
+              "Motion": {
+                "GoStraight": {
+                  "direction": {
+                    "Direction": {
+                      "possible_directions": [
+                        "Right"
+                      ]
+                    }
+                  },
+                  "speed": "VerySlow"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "max": {
+                    "x": 400.0,
+                    "y": 900.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "0748"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 400.0,
+                    "y": 0.0
+                  },
+                  "max": {
+                    "x": 800.0,
+                    "y": 900.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "0749"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 800.0,
+                    "y": 0.0
+                  },
+                  "max": {
+                    "x": 1200.0,
+                    "y": 900.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "0750"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 1200.0,
+                    "y": 0.0
+                  },
+                  "max": {
+                    "x": 1600.0,
+                    "y": 900.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "0751"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "triggers": [
+            {
+              "Collision": {
+                "Area": {
+                  "min": {
+                    "x": 1600.0,
+                    "y": 0.0
+                  },
+                  "max": {
+                    "x": 2000.0,
+                    "y": 900.0
+                  }
+                }
+              }
+            }
+          ],
+          "actions": [
+            {
+              "SetProperty": {
+                "Sprite": {
+                  "Image": {
+                    "name": "0752"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "background": [
+    {
+      "sprite": {
+        "Colour": {
+          "r": 0.36078432,
+          "g": 0.49803922,
+          "b": 0.92156863,
+          "a": 1.0
+        }
+      },
+      "area": {
+        "min": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "max": {
+          "x": 1600.0,
+          "y": 900.0
+        }
+      }
+    }
+  ],
+  "asset_files": {
+    "images": {
+      "ground": "ground.png",
+      "skeleton-2": "skeleton-2.png",
+      "0751": "0751.png",
+      "skeleton-idle-1": "skeleton-idle-1.png",
+      "skeleton-4": "skeleton-4.png",
+      "0750": "0750.png",
+      "skeleton-3": "skeleton-3.png",
+      "0748": "0748.png",
+      "0749": "0749.png",
+      "skeleton-1": "skeleton-1.png",
+      "red-skeleton-attack-2": "red-skeleton-attack-2.png",
+      "skeleton-6": "skeleton-6.png",
+      "skeleton-5": "skeleton-5.png",
+      "red-skeleton-attack-1": "red-skeleton-attack-1.png",
+      "skeleton-idle-2": "skeleton-idle-2.png",
+      "0752": "0752.png",
+      "red-skeleton-attack-3": "red-skeleton-attack-3.png",
+      "skeleton-idle": "skeleton-idle.png"
+    },
+    "audio": {
+      "bye": "bye.ogg",
+      "hello": "hello.ogg"
+    },
+    "music": {
+      "filename": "chipper.ogg",
+      "looped": false
+    },
+    "fonts": {}
+  },
+  "length": {
+    "Seconds": 3.8
+  },
+  "intro_text": "Rewind Time!",
+  "attribution": "Skeletons: https://jesse-m.itch.io/skeleton-pack\nGround: https://bakudas.itch.io/generic-platformer-pack\nClock: https://corymcd.itch.io/100-tick-clock\n\nSound effects by BCKR licensed under CC BY 4.0\nhttps://creativecommons.org/licenses/by/4.0/legalcode\nhttps://bckr.itch.io/sdap\n\n'Chipper' #2 Over World Loop by Smoothie Games is licensed under CC BY-ND 4.0\nhttps://creativecommons.org/licenses/by-nd/4.0/legalcode\nhttps://smoothie-games.itch.io/chipper-over-world-loop"
+}
