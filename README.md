@@ -1,3 +1,5 @@
+This repository has been archived and all future development will be done at https://github.com/yeahross0/weegames
+
 # Weegames Demo
 This project is the WASM version of [Weegames](https://github.com/yeahross0/weegames) made with macroquad. You can play the demo on [itch.io](https://yeahross.itch.io/weegames).
 
